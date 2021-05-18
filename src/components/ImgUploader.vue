@@ -2,13 +2,16 @@
   <h2>Upload an image</h2>
   <form>
     <label className="label-img-uplader" htmlFor="img">
-      <span><font-awesome-icon icon="upload" /></span>
+      <span v-if="!imgDisplay"><font-awesome-icon icon="upload" /></span>
+      <img class="img-display" v-else :src="[imgDisplay]" alt="" />
     </label>
     <input
+      @change="onChangeImg($event)"
       class="input-img-uploader"
       id="img"
       accept="image/png,image/jpeg"
       type="file"
+      name="img"
     />
     <button type="submit">Get result</button>
   </form>
@@ -17,6 +20,26 @@
 <script>
 export default {
   name: "ImgUploader",
+  data() {
+    return {
+      imgDisplay: "",
+      imgFile: "",
+    };
+  },
+  methods: {
+    onChangeImg(e) {
+      this.imgFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          this.imgDisplay = reader.result;
+        }
+      };
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    },
+  },
 };
 </script>
 
@@ -79,6 +102,12 @@ button {
 button:hover {
   background-color: #77c8a4;
   cursor: pointer;
+}
+
+.img-display {
+  width: 80%;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 @media (min-width: 600px) {
