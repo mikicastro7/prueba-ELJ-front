@@ -1,7 +1,7 @@
 <template>
   <Header />
   <section class="container">
-    <ImgUploader />
+    <ImgUploader @get-color-img="getColorImg" />
     <ResultColor
       :displayResult="displayResult"
       :name="colorResult.colorName"
@@ -24,12 +24,29 @@ export default {
   },
   data() {
     return {
-      displayResult: true,
+      displayResult: false,
       colorResult: {
-        colorName: "Aqua",
-        colorCodeHex: "#00FFFF",
+        colorName: "",
+        colorCodeHex: "",
       },
     };
+  },
+  methods: {
+    async getColorImg(imgFile) {
+      const datos = new FormData();
+      datos.append("file", imgFile);
+
+      const res = await fetch("http://127.0.0.1:8000/api/img-most-used-color", {
+        method: "POST",
+        body: datos,
+      });
+      const data = await res.json();
+      this.colorResult.colorName = data.colorName;
+      this.colorResult.colorCodeHex = data.colorHex;
+      if (!data.error) {
+        this.displayResult = true;
+      }
+    },
   },
 };
 </script>

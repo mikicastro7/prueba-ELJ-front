@@ -1,6 +1,6 @@
 <template>
   <h2>Upload an image</h2>
-  <form>
+  <form @submit="onSubmitImg($event)">
     <label className="label-img-uplader" htmlFor="img">
       <span v-if="!imgDisplay"><font-awesome-icon icon="upload" /></span>
       <img class="img-display" v-else :src="[imgDisplay]" alt="" />
@@ -13,7 +13,7 @@
       type="file"
       name="img"
     />
-    <button type="submit">Get result</button>
+    <button :disabled="!imgDisplay.length" type="submit">Get result</button>
   </form>
 </template>
 
@@ -26,8 +26,17 @@ export default {
       imgFile: "",
     };
   },
+  emits: ["get-color-img"],
   methods: {
+    onSubmitImg(e) {
+      e.preventDefault();
+      this.$emit("get-color-img", this.imgFile);
+    },
     onChangeImg(e) {
+      if (!e.target.files[0]) {
+        this.imgDisplay = "";
+        this.imgFile = "";
+      }
       this.imgFile = e.target.files[0];
       const reader = new FileReader();
       reader.onload = () => {
@@ -97,6 +106,15 @@ button {
   border-radius: 25px;
   font-size: 20px;
   padding: 10px 20px;
+}
+
+button:disabled {
+  background-color: #c1ebd8;
+}
+
+button:disabled:hover {
+  background-color: #aae6cb;
+  cursor: default;
 }
 
 button:hover {
