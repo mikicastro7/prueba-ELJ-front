@@ -2,18 +2,34 @@
   <Header />
   <section class="container">
     <ImgUploader />
+    <ResultColor
+      :displayResult="displayResult"
+      :name="colorResult.colorName"
+      :code="colorResult.colorCodeHex"
+    />
   </section>
 </template>
 
 <script>
 import Header from "./components/Header";
 import ImgUploader from "./components/ImgUploader";
+import ResultColor from "./components/ResultColor";
 
 export default {
   name: "App",
   components: {
     Header,
     ImgUploader,
+    ResultColor,
+  },
+  data() {
+    return {
+      displayResult: true,
+      colorResult: {
+        colorName: "Aqua",
+        colorCodeHex: "#00FFFF",
+      },
+    };
   },
 };
 </script>
