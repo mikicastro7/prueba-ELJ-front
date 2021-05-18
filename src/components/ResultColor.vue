@@ -1,6 +1,12 @@
 <template>
-  <ul v-if="displayResult" class="results-list">
-    <li :style="{ color: code }">{{ name }}</li>
+  <ul
+    :class="[code === '#FFFFFF' ? 'bg-color' : '']"
+    v-if="displayResult"
+    class="results-list"
+  >
+    <li :style="{ color: code }">
+      {{ name }}
+    </li>
     <li :style="{ color: code }">{{ code }}</li>
     <li :style="{ background: code }" class="color-result"></li>
   </ul>
@@ -34,5 +40,8 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 5px;
+}
+.bg-color {
+  background-color: #42b983;
 }
 </style>
