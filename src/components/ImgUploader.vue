@@ -109,6 +109,10 @@ button:hover {
   border: 2px solid black;
   border-radius: 10px;
 }
+.img-display:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
 
 @media (min-width: 600px) {
   .label-img-uplader span {
