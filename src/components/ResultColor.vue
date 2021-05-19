@@ -28,7 +28,7 @@ export default {
   list-style-type: none;
   margin-top: 30px;
   display: flex;
-  width: 384px;
+  flex-direction: column;
   border: 1px solid #c5fae2;
   justify-content: space-evenly;
   margin: 30px auto;
@@ -43,5 +43,11 @@ export default {
 }
 .bg-color {
   background-color: #42b983;
+}
+@media (min-width: 600px) {
+  .results-list {
+    flex-direction: row;
+    width: 384px;
+  }
 }
 </style>
